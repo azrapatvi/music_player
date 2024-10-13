@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>music player</title>
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <img src="left angle.png" style="width: 30px;">
+                </div>
+                <div class="circle">
+                    <img src="menu.png" style="width: 30px;">
+                </div>
+            </nav>
+            <img src="euphoris.png" class="song-img">
+            <h1>EUPHORIA</h1>
+            <p>Jungkook (BTS) – <i>Euphoria</i></p>
+
+            <audio controls id="song">
+                <source src="Euphoria.mp3" type="audio/mpeg">
+            </audio>
+            <input type="range" value="0" id="progress">
+
+            <div class="controls">
+                <div><img src="backward.png" style="width: 25px;"></div>
+                <div onclick="playPause()"><img src="play.png" id="ctrlIcon" style="width: 25px;" class="play"></div>
+                <div><img src="forward.png" style="width: 35px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let progress=document.getElementById("progress");
+        let song=document.getElementById("song");
+        let ctrlIcon=document.getElementById("ctrlIcon");
+
+        song.onloadedmetadata=function(){
+            progress.max=song.duration;
+            progress.value=song.currentTime;
+        }
+
+        function playPause() {
+            if (song.paused) {
+                song.play();
+                ctrlIcon.src = "pause.png"; // Change icon to pause
+            } else {
+                song.pause();
+                ctrlIcon.src = "play.png"; // Change icon to play
+            }
+        }
+
+        progress.oninput = function () {
+            song.currentTime = progress.value; // Update song's current time as slider is adjusted
+            if (song.paused) {
+                song.play(); // Play the song when user slides the range
+                ctrlIcon.src = "pause.png"; // Show the pause icon when the song plays
+            }
+        };
+
+    </script>
+    
+</body>
+</html>
